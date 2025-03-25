@@ -7,7 +7,10 @@ obj/
 .fake
 
 # image files
-eshopApi/img/*
+img/*
 
 #config files
 .env
+
+# User-specific files
+**/.DS_Store
