@@ -18,13 +18,5 @@ namespace EshopApi.Domain
 
         [Required]
         public required string PictureUri { get; set; }
-
-        public Product(string name, string description, decimal price, string pictureUri)
-        {
-            Name = name;
-            Description = description;
-            Price = price;
-            PictureUri = pictureUri;
-        }
     }
 }
