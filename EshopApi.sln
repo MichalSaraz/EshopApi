@@ -2,8 +2,6 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EshopApi", "EshopApi.csproj", "{6657C1C7-8B43-F03E-2800-3B00C27E99FD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EshopApi.Application", "EshopApi.Application\EshopApi.Application.csproj", "{A6EF8D1F-7311-4F8D-AD41-2C705A7CAC58}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EshopApi.Domain", "EshopApi.Domain\EshopApi.Domain.csproj", "{CFA06837-C02C-422F-A695-4D27976BB2C0}"
