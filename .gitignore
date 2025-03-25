@@ -5,3 +5,9 @@ obj/
 **/obj/
 
 .fake
+
+# image files
+eshopApi/img/*
+
+#config files
+.env
