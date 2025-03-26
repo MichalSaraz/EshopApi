@@ -1,4 +1,5 @@
 using DotNetEnv.Configuration;
+using EshopApi.Application.Interfaces;
 using EshopApi.Domain.Interfaces;
 using EshopApi.Infrastructure;
 using EshopApi.Infrastructure.Data;
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<EshopDbContext>(options =>
 
 builder.Services.AddScoped<InitialData>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

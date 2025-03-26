@@ -6,5 +6,6 @@ namespace EshopApi.Domain.Interfaces
     {
         Task<IEnumerable<Product>> GetProductsAsync();
         Task<Product?> GetProductByIdAsync(Guid id);
+        Task<Product> UpdateProductAsync(Product product);
     }
 }
