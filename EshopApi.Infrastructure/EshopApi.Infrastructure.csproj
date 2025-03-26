@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EshopApi.Application\EshopApi.Application.csproj" />
+    <ProjectReference Include="..\EshopApi.Shared\EshopApi.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
