@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using EshopApi.Domain;
+using EshopApi.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -13,7 +14,7 @@ public class EshopDbContext : DbContext
     {
         _configuration = configuration;
     }
-   
+
     public DbSet<Product> Products { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)

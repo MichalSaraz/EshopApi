@@ -1,4 +1,5 @@
 using EshopApi.Domain;
+using EshopApi.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

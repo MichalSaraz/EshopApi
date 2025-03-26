@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace EshopApi.Domain
+namespace EshopApi.Domain.Entities
 {
     public class Product
     {
