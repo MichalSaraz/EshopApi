@@ -1,4 +1,5 @@
 using EshopApi.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace EshopApi.Infrastructure.Data
@@ -23,12 +24,21 @@ namespace EshopApi.Infrastructure.Data
             return $"{basePath}{fileName}";
         }
 
+        public async Task InitializeDatabaseAsync(EshopDbContext context)
+        {
+            if (await context.Products.AnyAsync())
+                return;
+
+            var products = GetInitialProducts();
+            await context.Products.AddRangeAsync(products);
+            await context.SaveChangesAsync();
+        }
 
         public List<Product> GetInitialProducts() => new List<Product>
         {
             new Product
             {
-                Id = Guid.Parse("1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p"),
+                Id = Guid.NewGuid(),
                 Name = "Moderní hodinky",
                 Description = "Elegantní pánské hodinky s černým řemínkem a LED displejem. Vodotěsné do 50 metrů.",
                 Price = 2999.00m,
@@ -36,7 +46,7 @@ namespace EshopApi.Infrastructure.Data
             },
             new Product
             {
-                Id = Guid.Parse("2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p"),
+                Id = Guid.NewGuid(),
                 Name = "Bezdrátová sluchátka",
                 Description = "Profesionální bezdrátová sluchátka s aktivním potlačením šumu a výdrží 24 hodin.",
                 Price = 4999.00m,
@@ -44,7 +54,7 @@ namespace EshopApi.Infrastructure.Data
             },
             new Product
             {
-                Id = Guid.Parse("3c4d5e6f-7g8h-9i0j-1k2l-3m4n5o6p7q"),
+                Id = Guid.NewGuid(),
                 Name = "Smartphone",
                 Description = "Nejnovější model smartphone s 6GB RAM, 128GB úložištěm a trojitým fotoaparátem.",
                 Price = 14999.00m,
@@ -52,7 +62,7 @@ namespace EshopApi.Infrastructure.Data
             },
             new Product
             {
-                Id = Guid.Parse("4d5e6f7g-8h9i-0j1k-2l3m-4n5o6p7q8r"),
+                Id = Guid.NewGuid(),
                 Name = "Kávovar",
                 Description = "Automatický kávovar s širokou škálou funkcí a možností nastavení.",
                 Price = 8999.00m,
@@ -60,7 +70,7 @@ namespace EshopApi.Infrastructure.Data
             },
             new Product
             {
-                Id = Guid.Parse("5e6f7g8h-9i0j-1k2l-3m4n-5o6p7q8r9s"),
+                Id = Guid.NewGuid(),
                 Name = "Dámská taška",
                 Description = "Elegantní kožená taška s několika kapsami a odnímatelným ramínkem.",
                 Price = 3999.00m,
@@ -68,7 +78,7 @@ namespace EshopApi.Infrastructure.Data
             },
             new Product
             {
-                Id = Guid.Parse("6f7g8h9i-0j1k-2l3m-4n5o-6p7q8r9s0t"),
+                Id = Guid.NewGuid(),
                 Name = "Manželská postel",
                 Description = "Moderní manželská postel 200cm x 180cm s úložným prostorem a matrací.",
                 Price = 5999.00m,
@@ -76,7 +86,7 @@ namespace EshopApi.Infrastructure.Data
             },
             new Product
             {
-                Id = Guid.Parse("7g8h9i0j-1k2l-3m4n-5o6p-7q8r9s0t1u"),
+                Id = Guid.NewGuid(),
                 Name = "Powerbanka",
                 Description = "Výkonná powerbanka s kapacitou 20000mAh a dvěma USB porty.",
                 Price = 1299.00m,
@@ -84,7 +94,7 @@ namespace EshopApi.Infrastructure.Data
             },
             new Product
             {
-                Id = Guid.Parse("8h9i0j1k-2l3m-4n5o-6p7q-8r9s0t1u2v"),
+                Id = Guid.NewGuid(),
                 Name = "Dámské boty",
                 Description = "Elegantní černé boty na podpatku s pohodlnou stélkou a kvalitním materiálem.",
                 Price = 2999.00m,
@@ -92,7 +102,7 @@ namespace EshopApi.Infrastructure.Data
             },
             new Product
             {
-                Id = Guid.Parse("9i0j1k2l-3m4n-5o6p-7q8r-9s0t1u2v3w"),
+                Id = Guid.NewGuid(),
                 Name = "Lednice s mrazákem",
                 Description = "Kompaktní lednička s mrazákem a automatickým odtáváním.",
                 Price = 15999.00m,
@@ -100,7 +110,7 @@ namespace EshopApi.Infrastructure.Data
             },
             new Product
             {
-                Id = Guid.Parse("0j1k2l3m-4n5o-6p7q-8r9s-0t1u2v3w4x"),
+                Id = Guid.NewGuid(),
                 Name = "Mikrovlnná trouba",
                 Description = "Mikrovlnná trouba s dotykovým ovládáním a funkcí grilování.",
                 Price = 3999.00m,
@@ -108,7 +118,7 @@ namespace EshopApi.Infrastructure.Data
             },
             new Product
             {
-                Id = Guid.Parse("1k2l3m4n-5o6p-7q8r-9s0t-1u2v3w4x5y"),
+                Id = Guid.NewGuid(),
                 Name = "Pračka",
                 Description = "Automatická pračka s předpíráním a funkcí sušení.",
                 Price = 24999.00m,
@@ -116,7 +126,7 @@ namespace EshopApi.Infrastructure.Data
             },
             new Product
             {
-                Id = Guid.Parse("2l3m4n5o-6p7q-8r9s-0t1u-2v3w4x5y6z"),
+                Id = Guid.NewGuid(),
                 Name = "LCD Televize",
                 Description = "64'' LCD televize s rozlišením 4K, HDR a operačním systémem Android TV.",
                 Price = 34999.00m,
