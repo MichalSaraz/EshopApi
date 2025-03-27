@@ -1,6 +1,9 @@
 using EshopApi.Domain.Entities;
 using EshopApi.Domain.Interfaces;
+using EshopApi.Shared.Dtos;
+using EshopApi.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace EshopApi.Infrastructure.Data.Repositories
 {
@@ -20,11 +23,9 @@ namespace EshopApi.Infrastructure.Data.Repositories
             return product ?? null;
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAsync()
+        public IQueryable<Product> GetAllProductsQuery()
         {
-            var productsQuery = _context.Products;
-            var products = await productsQuery.ToListAsync();
-            return products;
+            return _context.Products.AsQueryable();
         }
 
         public async Task<Product> UpdateProductAsync(Product product)

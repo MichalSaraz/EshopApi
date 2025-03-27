@@ -4,7 +4,7 @@ namespace EshopApi.Domain.Interfaces
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetProductsAsync();
+        IQueryable<Product> GetAllProductsQuery();
         Task<Product?> GetProductByIdAsync(Guid id);
         Task<Product> UpdateProductAsync(Product product);
     }

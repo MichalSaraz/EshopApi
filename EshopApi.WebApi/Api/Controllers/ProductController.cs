@@ -5,6 +5,8 @@ using EshopApi.Shared.Dtos;
 using EshopApi.Application.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using EshopApi.Shared.Exceptions;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace YourProject.WebApi.Api.Controllers
 {
@@ -15,6 +17,7 @@ namespace YourProject.WebApi.Api.Controllers
         private readonly IProductRepository _productRepository;
         private readonly IProductService _productService;
         private readonly ILogger<ProductsController> _logger;
+
         public ProductsController(
             IProductRepository productRepository,
             IProductService productService,
@@ -28,9 +31,18 @@ namespace YourProject.WebApi.Api.Controllers
         [HttpGet("all-products")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
         {
-            var products = await _productRepository.GetProductsAsync();
+            var products = await _productRepository.GetAllProductsQuery()
+                .Select(p => new ProductDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    PictureUri = p.PictureUri,
+                    Price = p.Price,
+                    Description = p.Description
+                })
+                .ToListAsync();
 
-            if (products.Count() == 0)
+            if (!products.Any())
             {
                 return Ok("No products found");
             }
