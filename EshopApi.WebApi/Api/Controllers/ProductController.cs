@@ -5,8 +5,9 @@ using EshopApi.Shared.Dtos;
 using EshopApi.Application.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using EshopApi.Shared.Exceptions;
+using Newtonsoft.Json;
+using EshopApi.Shared.Models;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace YourProject.WebApi.Api.Controllers
 {
@@ -46,6 +47,29 @@ namespace YourProject.WebApi.Api.Controllers
             {
                 return Ok("No products found");
             }
+
+            return Ok(products);
+        }
+
+        [HttpGet("all-paginated-products")]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllPaginatedProducts([FromQuery] QueryStringParameters parameters)
+        {
+            if (!parameters.IsValid(out string? errorMessage))
+            {
+                return BadRequest(new { error = errorMessage });
+            }
+            var products = await _productService.GetPaginatedProductsAsync(parameters);
+
+            Response.Headers.Append("X-Pagination",
+                JsonConvert.SerializeObject(new
+                {
+                    totalCount = products.TotalCount,
+                    pageSize = products.PageSize,
+                    currentPage = products.CurrentPage,
+                    totalPages = products.TotalPages,
+                    hasNext = products.HasNext,
+                    hasPrevious = products.HasPrevious
+                }));
 
             return Ok(products);
         }

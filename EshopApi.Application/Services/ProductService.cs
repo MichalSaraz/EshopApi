@@ -3,6 +3,7 @@ using EshopApi.Application.Interfaces;
 using EshopApi.Domain.Interfaces;
 using EshopApi.Shared.Dtos;
 using EshopApi.Shared.Exceptions;
+using EshopApi.Shared.Models;
 
 public class ProductService : IProductService
 {
@@ -38,6 +39,32 @@ public class ProductService : IProductService
             Price = product.Price,
             PictureUri = product.PictureUri
         };
+    }
 
+    public async Task<PagedList<ProductDto>> GetPaginatedProductsAsync(QueryStringParameters parameters)
+    {
+        var query = _productRepository.GetAllProductsQuery();
+
+        if (!parameters.IsValid(out string? errorMessage))
+        {
+            throw new ArgumentException(errorMessage);
+        }
+
+        var pagedProducts = await Task.Run(() =>
+            PagedList<ProductDto>.ToPagedList(
+                query.Select(p => new ProductDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    PictureUri = p.PictureUri,
+                    Price = p.Price,
+                    Description = p.Description
+                }),
+                parameters.PageNumber,
+                parameters.PageSize
+            )
+        );
+
+        return pagedProducts;
     }
 }
