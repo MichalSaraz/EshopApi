@@ -8,11 +8,14 @@ using EshopApi.Shared.Exceptions;
 using Newtonsoft.Json;
 using EshopApi.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using Asp.Versioning;
 
 namespace YourProject.WebApi.Api.Controllers
 {
     [ApiController]
-    [Route("api/products")]
+    [ApiVersion(1)]
+    [ApiVersion(2)]
+    [Route("api/v{v:apiVersion}/products")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -30,6 +33,7 @@ namespace YourProject.WebApi.Api.Controllers
         }
 
         [HttpGet("all-products")]
+        [MapToApiVersion(1)]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
         {
             var products = await _productRepository.GetAllProductsQuery()
@@ -52,6 +56,7 @@ namespace YourProject.WebApi.Api.Controllers
         }
 
         [HttpGet("all-paginated-products")]
+        [MapToApiVersion(2)]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllPaginatedProducts([FromQuery] QueryStringParameters parameters)
         {
             if (!parameters.IsValid(out string? errorMessage))
@@ -75,6 +80,8 @@ namespace YourProject.WebApi.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [MapToApiVersion(1)]
+        [MapToApiVersion(2)]
         public async Task<ActionResult<ProductDto>> GetProduct(Guid id)
         {
             var product = await _productRepository.GetProductByIdAsync(id);
@@ -88,6 +95,8 @@ namespace YourProject.WebApi.Api.Controllers
         }
 
         [HttpPatch("{id}/description")]
+        [MapToApiVersion(1)]
+        [MapToApiVersion(2)]
         public async Task<ActionResult<ProductDto>> UpdateProductDescription(Guid id, [FromBody] UpdateDescriptionModel model)
         {
             try
