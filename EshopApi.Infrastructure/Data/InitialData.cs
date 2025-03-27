@@ -19,12 +19,22 @@ namespace EshopApi.Infrastructure.Data
             }
         }
 
+        /// <summary>
+        /// Constructs the full URL for a product image based on the provided file name.
+        /// </summary>
+        /// <param name="fileName">The name of the image file.</param>
+        /// <returns>The full URL of the product image as a string.</returns>
         private string GetProductImageUrl(string fileName)
         {
             string basePath = _basePath!;
             return $"{basePath}{fileName}";
         }
 
+        /// <summary>
+        /// Initializes the database with initial data if it is empty.
+        /// </summary>
+        /// <param name="context">The database context used to interact with the database.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task InitializeDatabaseAsync(EshopDbContext context)
         {
             if (await context.Products.AnyAsync())
@@ -35,6 +45,12 @@ namespace EshopApi.Infrastructure.Data
             await context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Retrieves a list of initial products with predefined details such as 
+        /// name, description, price, and image URI.
+        /// </summary>
+        /// <returns>A <see cref="List{T}"/> of <see cref="Product"/> objects containing the initial product data.
+        /// </returns>
         public List<Product> GetInitialProducts() => new List<Product>
         {
             new Product
