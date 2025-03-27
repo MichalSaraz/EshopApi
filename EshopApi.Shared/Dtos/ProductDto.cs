@@ -4,7 +4,7 @@ namespace EshopApi.Shared.Dtos
     {
         public Guid Id { get; set; }
         public required string Name { get; set; }
-        public required string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
         public required decimal Price { get; set; }
         public required string PictureUri { get; set; }
     }

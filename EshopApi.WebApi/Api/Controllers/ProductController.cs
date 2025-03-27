@@ -104,10 +104,6 @@ namespace YourProject.WebApi.Api.Controllers
                 var updatedProduct = await _productService.UpdateProductDescriptionAsync(id, model.Description);
                 return Ok(updatedProduct);
             }
-            catch (ValidationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
             catch (NotFoundException ex)
             {
                 return NotFound(ex.Message);

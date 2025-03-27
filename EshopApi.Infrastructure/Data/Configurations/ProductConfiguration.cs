@@ -17,7 +17,6 @@ namespace EshopApi.Infrastructure.Data.Configurations
                 .IsUnicode(true);
 
             builder.Property(e => e.Description)
-                .IsRequired()
                 .HasMaxLength(500)
                 .IsUnicode(true);
 

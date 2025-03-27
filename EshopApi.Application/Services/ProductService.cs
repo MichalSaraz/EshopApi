@@ -16,17 +16,8 @@ public class ProductService : IProductService
 
     public async Task<ProductDto> UpdateProductDescriptionAsync(Guid id, string description)
     {
-        if (string.IsNullOrWhiteSpace(description))
-        {
-            throw new ValidationException("Description is required");
-        }
-
-        var product = await _productRepository.GetProductByIdAsync(id);
-
-        if (product == null)
-        {
-            throw new NotFoundException("Product not found");
-        }
+        var product = await _productRepository.GetProductByIdAsync(id)
+            ?? throw new NotFoundException($"Product with id {id} not found");
 
         product.Description = description;
         await _productRepository.UpdateProductAsync(product);
