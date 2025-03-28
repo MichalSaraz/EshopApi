@@ -27,6 +27,13 @@ namespace EshopApi.Infrastructure.Data
         private string GetProductImageUrl(string fileName)
         {
             string basePath = _basePath!;
+            string imagePath = Path.Combine(basePath, fileName);
+
+            if (!File.Exists(imagePath))
+            {
+                return "https://dummyimage.com/300"; // nebo místní obrázek v rámci projektu
+            }
+
             return $"{basePath}{fileName}";
         }
 
