@@ -1,3 +1,4 @@
+using System.Reflection;
 using Asp.Versioning;
 using DotNetEnv.Configuration;
 using EshopApi.Application.Interfaces;
@@ -39,6 +40,10 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API v1", Version = "v1" });
     c.SwaggerDoc("v2", new OpenApiInfo { Title = "API v2", Version = "v2" });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
 });
 
 builder.Services.AddDbContext<EshopDbContext>(options =>
