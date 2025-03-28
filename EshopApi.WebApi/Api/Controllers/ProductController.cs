@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using EshopApi.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 using Asp.Versioning;
+using EshopApi.Shared.Extensions;
+using System.Diagnostics;
 
 namespace YourProject.WebApi.Api.Controllers
 {
@@ -59,23 +61,23 @@ namespace YourProject.WebApi.Api.Controllers
         [MapToApiVersion(1)]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
         {
-            var products = await _productRepository.GetAllProductsQuery()
-                .Select(p => new ProductDto
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    PictureUri = p.PictureUri,
-                    Price = p.Price,
-                    Description = p.Description
-                })
-                .ToListAsync();
+            var products = await _productRepository.GetAllProductsQuery().ToListAsyncSafe();
 
             if (!products.Any())
             {
                 return Ok("No products found");
             }
 
-            return Ok(products);
+            var productDtos = products.Select(p => new ProductDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                PictureUri = p.PictureUri,
+                Price = p.Price,
+                Description = p.Description
+            }).ToList();
+
+            return Ok(productDtos);
         }
 
         /// <summary>
@@ -93,21 +95,36 @@ namespace YourProject.WebApi.Api.Controllers
         [MapToApiVersion(2)]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllPaginatedProducts([FromQuery] QueryStringParameters parameters)
         {
+            if (parameters == null)
+            {
+                return BadRequest("Query parameters cannot be null");
+            }
+
             if (!parameters.IsValid(out string? errorMessage))
             {
                 return BadRequest(new { error = errorMessage });
             }
-            var products = await _productService.GetPaginatedProductsAsync(parameters);
+
+            var (products, totalCount) = await _productService.GetPaginatedProductsAsync(parameters);
+
+            if (products == null)
+            {
+                return NotFound("No products found");
+            }
+
+            int totalPages = (int)Math.Ceiling((double)totalCount / parameters.PageSize);
+            bool hasNext = parameters.PageNumber < totalPages;
+            bool hasPrevious = parameters.PageNumber > 1;
 
             Response.Headers.Append("X-Pagination",
                 JsonConvert.SerializeObject(new
                 {
-                    totalCount = products.TotalCount,
-                    pageSize = products.PageSize,
-                    currentPage = products.CurrentPage,
-                    totalPages = products.TotalPages,
-                    hasNext = products.HasNext,
-                    hasPrevious = products.HasPrevious
+                    totalCount,
+                    pageSize = parameters.PageSize,
+                    currentPage = parameters.PageNumber,
+                    totalPages,
+                    hasNext,
+                    hasPrevious
                 }));
 
             return Ok(products);
@@ -124,8 +141,6 @@ namespace YourProject.WebApi.Api.Controllers
         /// </returns>
         /// <response code="200">Returns the product details.</response>
         /// <response code="404">If the product is not found.</response>
-        [HttpGet("{id}")]
-        [MapToApiVersion(1)]
         public async Task<ActionResult<ProductDto>> GetProduct(Guid id)
         {
             var product = await _productRepository.GetProductByIdAsync(id);
@@ -135,7 +150,16 @@ namespace YourProject.WebApi.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(product);
+            var productDto = new ProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description,
+                PictureUri = product.PictureUri
+            };
+
+            return Ok(productDto);
         }
 
         /// <summary>

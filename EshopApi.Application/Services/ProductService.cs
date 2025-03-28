@@ -32,7 +32,7 @@ public class ProductService : IProductService
         };
     }
 
-    public async Task<PagedList<ProductDto>> GetPaginatedProductsAsync(QueryStringParameters parameters)
+    public async Task<(List<ProductDto>, int)> GetPaginatedProductsAsync(QueryStringParameters parameters)
     {
         var query = _productRepository.GetAllProductsQuery();
 
@@ -41,21 +41,22 @@ public class ProductService : IProductService
             throw new ArgumentException(errorMessage);
         }
 
+        int totalCount = query.Count();
+
         var pagedProducts = await Task.Run(() =>
-            PagedList<ProductDto>.ToPagedList(
-                query.Select(p => new ProductDto
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    PictureUri = p.PictureUri,
-                    Price = p.Price,
-                    Description = p.Description
-                }),
-                parameters.PageNumber,
-                parameters.PageSize
-            )
+            query.Select(p => new ProductDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                PictureUri = p.PictureUri,
+                Price = p.Price,
+                Description = p.Description
+            })
+            .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+            .Take(parameters.PageSize)
+            .ToList()
         );
 
-        return pagedProducts;
+        return (pagedProducts, totalCount);
     }
 }

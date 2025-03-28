@@ -16,11 +16,14 @@ namespace EshopApi.Application.Interfaces
         Task<ProductDto> UpdateProductDescriptionAsync(Guid id, string description);
 
         /// <summary>
-        /// Retrieves a paginated list of products based on the specified query parameters.
+        /// Retrieves a paginated list of products based on the specified query string parameters.
         /// </summary>
-        /// <param name="parameters">The query string parameters for pagination and filtering.</param>
-        /// <returns>A task that represents the asynchronous operation. 
-        /// The task result contains a <see cref="PagedList{T}"/> of <see cref="ProductDto"/>.</returns>
-        Task<PagedList<ProductDto>> GetPaginatedProductsAsync(QueryStringParameters parameters);
+        /// <param name="parameters">The query string parameters used for pagination and filtering.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains a tuple where:
+        /// - The first item is a list of <see cref="ProductDto"/> representing the paginated products.
+        /// - The second item is an integer representing the total number of products available.
+        /// </returns>
+        Task<(List<ProductDto>, int)> GetPaginatedProductsAsync(QueryStringParameters parameters);
     }
 }
