@@ -138,6 +138,8 @@ namespace YourProject.WebApi.Api.Controllers
         /// </returns>
         /// <response code="200">Returns the product details.</response>
         /// <response code="404">If the product is not found.</response>
+        [HttpGet("{id}")]
+        [MapToApiVersion(1)]
         public async Task<ActionResult<ProductDto>> GetProduct(Guid id)
         {
             var product = await _productRepository.GetProductByIdAsync(id);
