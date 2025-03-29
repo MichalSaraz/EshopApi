@@ -1,12 +1,12 @@
 using EshopApi.Domain.Entities;
 using EshopApi.Domain.Interfaces;
-using EshopApi.Shared.Dtos;
-using EshopApi.Shared.Models;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace EshopApi.Infrastructure.Data.Repositories
 {
+    /// <summary>
+    /// Repository for managing product data.
+    /// </summary>
     public class ProductRepository : IProductRepository
     {
         private readonly EshopDbContext _context;

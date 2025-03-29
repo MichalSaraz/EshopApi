@@ -1,10 +1,12 @@
-using System.ComponentModel.DataAnnotations;
 using EshopApi.Application.Interfaces;
 using EshopApi.Domain.Interfaces;
 using EshopApi.Shared.Dtos;
 using EshopApi.Shared.Exceptions;
 using EshopApi.Shared.Models;
 
+/// <summary>
+/// Service for managing product-related operations.
+/// </summary>
 public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;

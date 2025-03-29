@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using EshopApi.Domain;
-using EshopApi.Domain.Entities;
+﻿using EshopApi.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace EshopApi.Infrastructure;
 
+/// <summary>
+/// Represents the database context for the e-commerce application.
+/// </summary>
 public class EshopDbContext : DbContext
 {
     private readonly IConfiguration _configuration;

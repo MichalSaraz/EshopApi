@@ -2,6 +2,10 @@ using EshopApi.Domain.Entities;
 
 namespace EshopApi.Domain.Interfaces
 {
+    /// <summary>
+    /// Interface for the product repository.
+    /// Provides methods to interact with product data.
+    /// </summary>
     public interface IProductRepository
     {
         /// <summary>

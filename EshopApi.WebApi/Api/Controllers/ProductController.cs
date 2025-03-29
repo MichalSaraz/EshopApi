@@ -3,14 +3,11 @@ using EshopApi.WebApi.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using EshopApi.Shared.Dtos;
 using EshopApi.Application.Interfaces;
-using System.ComponentModel.DataAnnotations;
 using EshopApi.Shared.Exceptions;
 using Newtonsoft.Json;
 using EshopApi.Shared.Models;
-using Microsoft.EntityFrameworkCore;
 using Asp.Versioning;
 using EshopApi.Shared.Extensions;
-using System.Diagnostics;
 
 namespace YourProject.WebApi.Api.Controllers
 {

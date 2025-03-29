@@ -1,9 +1,11 @@
-using EshopApi.Domain.Entities;
 using EshopApi.Shared.Dtos;
 using EshopApi.Shared.Models;
 
 namespace EshopApi.Application.Interfaces
 {
+    /// <summary>
+    /// Interface for product-related operations.
+    /// </summary>
     public interface IProductService
     {
         /// <summary>

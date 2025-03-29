@@ -1,21 +1,32 @@
 namespace EshopApi.Shared.Models
 {
+    /// <summary>
+    /// Represents the query string parameters for pagination.
+    /// </summary>
     public class QueryStringParameters
     {
         private const int MaxPageSize = 50;
 
         private int _pageNumber = 1;
+
+        /// <summary>
+        /// Gets or sets the page number for pagination.
+        /// </summary>
         public int PageNumber
         {
             get => _pageNumber;
-            set => _pageNumber = (value < 1) ? 1 : value; // Zajišťuje, že je číslo kladné
+            set => _pageNumber = (value < 1) ? 1 : value;
         }
 
         private int _pageSize = 10;
+
+        /// <summary>
+        /// Gets or sets the size of each page for pagination.
+        /// </summary>
         public int PageSize
         {
             get => _pageSize;
-            set => _pageSize = (value < 1 || value > MaxPageSize) ? 10 : value; // Omezíme velikost stránky
+            set => _pageSize = (value < 1 || value > MaxPageSize) ? 10 : value;
         }
 
         /// <summary>

@@ -1,14 +1,19 @@
-using EshopApi.Domain;
 using EshopApi.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace EshopApi.Infrastructure.Data
 {
+    /// <summary>
+    /// This class is responsible for initializing the database with initial data.
+    /// </summary>
     public class InitialData
     {
         private readonly string? _basePath;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InitialData"/> class.
+        /// </summary>
         public InitialData(IConfiguration configuration)
         {
             _basePath = configuration["DEVELOPMENT_IMAGE_PATH"];

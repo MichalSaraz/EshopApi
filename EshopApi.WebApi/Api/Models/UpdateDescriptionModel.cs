@@ -1,12 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace EshopApi.WebApi.Api.Models
 {
+    /// <summary>
+    /// Model for updating the description of a product.
+    /// </summary>
     public class UpdateDescriptionModel
     {
+        /// <summary>
+        /// Gets or sets the new description for the product.
+        /// </summary>
         public string Description { get; set; } = string.Empty;
     }
 }

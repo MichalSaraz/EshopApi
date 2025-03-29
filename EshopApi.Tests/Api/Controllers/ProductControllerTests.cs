@@ -9,8 +9,6 @@ using EshopApi.WebApi.Api.Models;
 using EshopApi.Domain.Entities;
 using EshopApi.Shared.Exceptions;
 using EshopApi.Shared.Models;
-using Moq.EntityFrameworkCore;
-using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 

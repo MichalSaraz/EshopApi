@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EshopApi.Infrastructure.Data.Configurations
 {
+    /// <summary>
+    /// Configuration for the Product entity.
+    /// </summary>
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         public void Configure(EntityTypeBuilder<Product> builder)

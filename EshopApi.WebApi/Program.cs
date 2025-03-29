@@ -6,8 +6,6 @@ using EshopApi.Domain.Interfaces;
 using EshopApi.Infrastructure;
 using EshopApi.Infrastructure.Data;
 using EshopApi.Infrastructure.Data.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
