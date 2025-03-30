@@ -27,22 +27,18 @@ namespace YourProject.WebApi.Api.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly IProductService _productService;
-        private readonly ILogger<ProductsController> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductsController"/> class.
         /// </summary>
         /// <param name="productRepository">The repository for managing product data.</param>
         /// <param name="productService">The service for handling product-related business logic.</param>
-        /// <param name="logger">The logger instance for logging information, warnings, and errors.</param>
         public ProductsController(
             IProductRepository productRepository,
-            IProductService productService,
-            ILogger<ProductsController> logger)
+            IProductService productService)
         {
             _productRepository = productRepository;
             _productService = productService;
-            _logger = logger;
         }
 
         /// <summary>
@@ -186,11 +182,6 @@ namespace YourProject.WebApi.Api.Controllers
             catch (NotFoundException ex)
             {
                 return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while updating product description");
-                return StatusCode(500, "An error occurred while updating product description");
             }
         }
     }

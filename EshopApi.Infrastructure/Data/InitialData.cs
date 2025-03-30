@@ -36,7 +36,7 @@ namespace EshopApi.Infrastructure.Data
 
             if (!File.Exists(imagePath))
             {
-                return "https://dummyimage.com/300"; // nebo místní obrázek v rámci projektu
+                return "https://dummyimage.com/300";
             }
 
             return $"{basePath}{fileName}";
